@@ -1,18 +1,33 @@
 package main
 
-import (
-	"log"
-)
+import "log"
 
 func main()  {
-	c:=saveData(
-		fetchData(
-			prepareData(
-				generateData(),
-				),
-			),
-		)
-	for data:=range c{
-		log.Printf("Items saved: %v\n",data)
+	for n:=range sq(gen(5,4,7,9,15,11,12,17)){
+		log.Println(n)
 	}
+
 }
+
+func gen(nums ...int) <-chan int {
+	out:=make(chan int,len(nums))
+	go func() {
+		for _,n:=range nums{
+			out<-n
+		}
+		close(out)
+	}()
+	return out
+}
+
+func sq(in <-chan int) <-chan int{
+	out:=make(chan int)
+	go func() {
+		for n:=range in{
+			out<-n*n
+		}
+		close(out)
+	}()
+	return out
+}
+
