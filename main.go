@@ -14,6 +14,7 @@ import (
 // Image processing - sequential
 // Input - directory with images.
 // output - thumbnail images
+// walkfiles --> process image --> save image
 func main() {
 	if len(os.Args) < 2 {
 		log.Fatal("need to send directory path of images")
@@ -118,7 +119,7 @@ func getFileContentType(file string) (string, error) {
 		return "", err
 	}
 
-	// Use the net/http package's handy DectectContentType function. Always returns a valid
+	// Use the net/http package's handy DetectContentType function. Always returns a valid
 	// content-type by returning "application/octet-stream" if no others seemed to match.
 	contentType := http.DetectContentType(buffer)
 
